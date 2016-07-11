@@ -1,4 +1,4 @@
-(function() {
+(() => {
   var boardDimensions = {
     height: 750,
     width: 1550
@@ -20,44 +20,43 @@
         .attr('y', 225)
         .attr('height', 30)
         .attr('width', 30)
-        .attr('xlink:href', 'client/img/ness-walking.gif')
-        .on('mouseover', function() {
+        .attr('xlink:href', 'client/img/ness-walking-down.gif')
+        .on('mouseover', () => {
           board.selectAll('.ness')
             .attr('xlink:href', 'client/img/ness-peace.png');
         })
-        .on('mouseout', function() {
+        .on('mouseout', () => {
           board.selectAll('.ness')
-            .attr('xlink:href', 'client/img/ness-walking.gif');
+            .attr('xlink:href', 'client/img/ness-walking-down.gif');
         })
-        .on('click', function() {
+        .on('click', () => {
           console.log(d3.select(this).attr('x') - 10);
         });
     },
 
-    // The right and down methods aren't working for some reason.
     move: {
-      left: function() {
+      left: () => {
         board.selectAll('.ness')
-          .attr('x', board.selectAll('.ness').attr('x') - 5);
+          .attr('x', +board.selectAll('.ness').attr('x') - 5);
       },
-      up: function() {
+      up: () => {
         board.selectAll('.ness')
-          .attr('y', board.selectAll('.ness').attr('y') - 5);
+          .attr('y', +board.selectAll('.ness').attr('y') - 5);
       },
-      right: function() {
+      right: () => {
         board.selectAll('.ness')
-          .attr('x', board.selectAll('.ness').attr('x') + 5);
+          .attr('x', +board.selectAll('.ness').attr('x') + 5);
       },
-      down: function() {
+      down: () => {
         board.selectAll('.ness')
-          .attr('y', board.selectAll('.ness').attr('y') + 5);
+          .attr('y', +board.selectAll('.ness').attr('y') + 5);
       }
     }
   };
 
   // Move Ness
   d3.select('body')
-    .on('keydown', function() {
+    .on('keydown', () => {
       if (d3.event.keyCode === 37) {
         ness.move.left();
       } else if (d3.event.keyCode === 38) {
@@ -65,12 +64,12 @@
       } else if (d3.event.keyCode === 39) {
         ness.move.right();
       } else if (d3.event.keyCode === 40) {
-        ness.moveown();
+        ness.move.down();
       }
     });
 
   var runawayFive = {
-    place: function() {
+    place: () => {
       board.selectAll('.runawayFive').data([{x: 0, y: 0}])
         .enter() 
         .append('image')
@@ -81,7 +80,7 @@
         .attr('width', 80)
         .attr('xlink:href', 'client/img/runaway5.png');
     },
-    move: function() {
+    move: () => {
       board.selectAll('.runawayFive')
         .transition().duration(14000)
         .attr('x', 1900)
@@ -89,7 +88,7 @@
     }
   };
 
-  var initialize = function() {
+  var initialize = () => {
     ness.place();
     runawayFive.place();
     runawayFive.move();
