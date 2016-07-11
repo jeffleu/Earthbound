@@ -33,6 +33,8 @@
           console.log(d3.select(this).attr('x') - 10);
         });
     },
+
+    // The right and down methods aren't working for some reason.
     move: {
       left: function() {
         board.selectAll('.ness')
