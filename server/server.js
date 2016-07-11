@@ -1,28 +1,32 @@
 // Modules
+var fs = require('fs');
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 // Config files
-var db = require('./db/db-config');
+var db = require('./config/db-config');
 
 // Set up port
 var port = process.env.PORT || 8080;
 
 // Connect to mongoDB
-mongoose.connect(db.url);
+// mongoose.connect(db.url);
 
 // Get all data of the body (POST) parameters parse application/json 
 app.use(bodyParser.json()); 
 
-// set the static files location /public/img will be /img for users
-// app.use(express.static(__dirname + '/public')); 
+app.use(express.static(__dirname + "/../client"));
 
 // Configure our routes
-require('./app/routes')(app);
+// require('./app/routes')(app);
 
 // Start app at http://localhost:8080
-app.listen(port);               
-console.log('Listening on port ' + port);
+app.listen(port, function () {
+  console.log(`Listening on port ${port}!`);
+});
 
 // expose app           
-exports = module.exports = app;
+// exports = module.exports = app;
+module.exports = app;
