@@ -1,14 +1,14 @@
+var boardDimensions = {
+  height: 750,
+  width: 1550
+};
+
 /**********************************************************
   MAP VIEW
 **********************************************************/
 
 var map = () => {
   d3.select('.map').html('');
-
-  var boardDimensions = {
-    height: 750,
-    width: 1550
-  };
 
   var board = d3.select('.map').append('svg')
     .attr('class', 'map')
@@ -162,7 +162,7 @@ var map = () => {
 
     var dist = distance(playerX, playerY, enemyX, enemyY);
 
-    if (dist < 125) {
+    if (dist < 175) {
       // Move enemies
       board.selectAll('.enemy')
         .data(enemiesArray, function(d) { return d; })
@@ -171,13 +171,15 @@ var map = () => {
         .attr('x', playerX)
         .attr('y', playerY);
 
+      clearInterval(collisionInterval);
+
       setTimeout(function() {
         switchToBattle();
-      }, 700);
+      }, 350);
     }
   };
 
-
+  var collisionInterval = setInterval(collision, 100);
 
   /**********************************************************
     INITIALIZE
@@ -188,21 +190,14 @@ var map = () => {
     runawayFive.place();
     runawayFive.move();
     getEnemies();
-    setInterval(function() {
-      collision();
-    }, 100);
+    collisionInterval;
   };
 
   initialize();
 
 };
 
-var switchToMap = function() {
-  window.location = '#/map';
-  setTimeout(function() {
-    map();
-  }, 100);
-};
+
 
 
 
@@ -222,11 +217,6 @@ var switchToMap = function() {
 
 var battle = () => {
   d3.select('.battle').html('');
-
-  var boardDimensions = {
-    height: 750,
-    width: 1550
-  };
 
   var board = d3.select('.battle').append('svg')
     .attr('class', 'map')
@@ -248,11 +238,37 @@ var battle = () => {
     }
   };
 
+  var pokey = {
+    place: () => {
+      board.selectAll('.pokey').data([{x: 0, y: 0}])
+        .enter() 
+        .append('image')
+        .attr('class', 'pokey')
+        .attr('x', 550)
+        .attr('y', 120)
+        .attr('height', 350)
+        .attr('width', 500)
+        .attr('xlink:href', 'http://walkthrough.starmen.net/earthbound/image/enemies/heavilyarmedpokey.png');
+    }
+  };
+
   var initialize = () => {
     nessBattle.place();
+    pokey.place();
   };
 
   initialize();
+};
+
+/**********************************************
+  SWITCH VIEW FUNCTIONS
+**********************************************/
+
+var switchToMap = function() {
+  window.location = '#/map';
+  setTimeout(function() {
+    map();
+  }, 100);
 };
 
 var switchToBattle = function() {
