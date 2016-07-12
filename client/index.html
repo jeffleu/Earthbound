@@ -7,19 +7,15 @@
 <body onload="switchToMap()">
   <h1>Earthbound</h1>
 
-  <!-- <a href="#/map">Map</a> -->
   <a onclick="switchToMap()">Map</a>
-
-  <!-- <a href="#/battle">Battle</a> -->
   <a onclick="switchToBattle()">Battle</a>
 	
   <div ng-view></div>
-
-  <!-- <div class="main"></div> -->
   
   <script src="lib/angular.js"></script>
   <script src="lib/angular-route.js"></script>
 	<script src="app/app.js"></script>
+  <script src="lib/jquery/dist/jquery.min.js"></script>
   <script src="lib/d3.js"></script>
   <script src="views/map.js"></script>
   <script src="views/battle.js"></script>

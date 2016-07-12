@@ -39,21 +39,21 @@ var map = () => {
     move: {
       left: () => {
         board.selectAll('.ness')
-          .attr('x', +board.selectAll('.ness').attr('x') - 3);
+          .attr('x', +board.selectAll('.ness').attr('x') - 4);
       },
       up: () => {
         board.selectAll('.ness')
-          .attr('y', +board.selectAll('.ness').attr('y') - 3);
+          .attr('y', +board.selectAll('.ness').attr('y') - 4);
       },
       // TO DO: trim edges on ness-walking-right.gif
       right: () => {
         board.selectAll('.ness')
-          .attr('x', +board.selectAll('.ness').attr('x') + 3)
+          .attr('x', +board.selectAll('.ness').attr('x') + 4)
           .attr('xlink:href', '../../img/ness-walking-right.gif');
       },
       down: () => {
         board.selectAll('.ness')
-          .attr('y', +board.selectAll('.ness').attr('y') + 3)
+          .attr('y', +board.selectAll('.ness').attr('y') + 4)
           .attr('xlink:href', '../../img/ness-walking-down.gif');
       }
     }
@@ -93,20 +93,53 @@ var map = () => {
     }
   };
 
+  // Get and place enemies
+  var placeEnemy = function(imgUrl) {
+    board.selectAll('.enemy').data([{x: 0, y: 0}])
+      .enter()
+      .append('image')
+      .attr('class', 'enemy')
+      .attr('x', Math.floor(Math.random() * Number(boardDimensions.width)))
+      .attr('y', Math.floor(Math.random() * Number(boardDimensions.height)))
+      .attr('xlink:href', imgUrl);
+  };
+
+  var getEnemy = function(callback) {
+    $.ajax({
+      url: 'http://localhost:8080/enemies',
+      type: 'GET',
+      success: function(enemy) {
+        console.log('Successfully retrieved data!', enemy);
+        var randomIndex = Math.floor(Math.random() * enemy.length);
+        var randomEnemy = enemy[randomIndex];
+
+        callback(randomEnemy.img);
+      },
+      error: function(enemy) {
+        console.log('Failed getting data.');
+      }
+    });
+  };
+
+
   var initialize = () => {
     ness.place();
     runawayFive.place();
     runawayFive.move();
+    getEnemy(placeEnemy);
   };
 
   initialize();
 };
 
+
+
+
 var switchToMap = function(callback) {
   window.location = '#/map';
   setTimeout(function() {
     map();
-  }, 1);
+  }, 100);
 };
 
 

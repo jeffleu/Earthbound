@@ -37,5 +37,5 @@ var switchToBattle = function() {
   window.location = '#/battle';
   setTimeout(function() {
     battle();
-  }, 1)
+  }, 100)
 };
