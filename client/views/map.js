@@ -1,3 +1,7 @@
+/**********************************************************
+  MAP VIEW
+**********************************************************/
+
 var map = () => {
   d3.select('.map').html('');
 
@@ -11,6 +15,10 @@ var map = () => {
     .attr('width', boardDimensions.width)
     .attr('height', boardDimensions.height)
     .style('background-image', 'url("../../img/onett.jpg")');
+
+  /**********************************************************
+    NESS
+  **********************************************************/
 
   var ness = {
     place: () => {
@@ -74,6 +82,10 @@ var map = () => {
       }
     });
 
+  /**********************************************************
+    RUNAWAY FIVE
+  **********************************************************/
+
   var runawayFive = {
     place: () => {
       board.selectAll('.runawayFive').data([{x: 0, y: 0}])
@@ -94,41 +106,26 @@ var map = () => {
     }
   };
 
-
+  /**********************************************************
+    ENEMIES
+  **********************************************************/
 
   var enemiesArray = [];
 
-  var setEnemiesArray = function(enemies) {
-    enemies.forEach(function(enemy) {
-      enemiesArray.push(enemy);
-    });
-
-    console.log('enemiesArray populated!', enemiesArray);
-    getRandomEnemy();
-  };
-
-  var getEnemies = function(callback) {
+  var getEnemies = function() {
     $.ajax({
       url: 'http://localhost:8080/enemies',
       type: 'GET',
       success: function(data) {
         console.log('Successfully retrieved data!', data);
-        callback(data);
+        // callback(data);
+        enemiesArray = enemiesArray.concat(data);
+        placeEnemy(enemiesArray);
       },
       error: function(data) {
         console.log('Failed getting data.');
       }
     });
-  };
-
-
-  // var randomEnemy;
-
-  var getRandomEnemy = function() {
-    var randomIndex = Math.floor(Math.random() * enemiesArray.length);
-    // randomEnemy = enemiesArray[randomIndex];
-    placeEnemy(enemiesArray);  
-    // console.log(`${randomEnemy.name} appeared!`);
   };
 
   var placeEnemy = function(enemiesArray) {
@@ -144,26 +141,63 @@ var map = () => {
       .attr('xlink:href', function(d) { return d.img; });
   };
 
-  
-  
-  
+  /**************************************************************
+    COLLISION
+  **************************************************************/
 
-  
+  var distance = function(playerX, playerY, enemyX, enemyY) {
+    var x = playerX - enemyX;
+    var y = playerY - enemyY;
+    var dist = Math.floor(Math.sqrt((x * x) + (y * y)));
+
+    return dist;
+  };
+
+  var collision = function() {
+    var playerX = +board.selectAll('.ness').attr('x');
+    var playerY = +board.selectAll('.ness').attr('y');
+
+    var enemyX = +board.selectAll('.enemy').attr('x');
+    var enemyY = +board.selectAll('.enemy').attr('y');
+
+    var dist = distance(playerX, playerY, enemyX, enemyY);
+
+    if (dist < 125) {
+      // Move enemies
+      board.selectAll('.enemy')
+        .data(enemiesArray, function(d) { return d; })
+        .transition().duration(250)
+        .attr('class', 'enemies')
+        .attr('x', playerX)
+        .attr('y', playerY);
+
+      setTimeout(function() {
+        switchToBattle();
+      }, 700);
+    }
+  };
+
+
+
+  /**********************************************************
+    INITIALIZE
+  **********************************************************/  
 
   var initialize = () => {
     ness.place();
     runawayFive.place();
     runawayFive.move();
-    getEnemies(setEnemiesArray);
+    getEnemies();
+    setInterval(function() {
+      collision();
+    }, 100);
   };
 
   initialize();
+
 };
 
-
-
-
-var switchToMap = function(callback) {
+var switchToMap = function() {
   window.location = '#/map';
   setTimeout(function() {
     map();
@@ -171,6 +205,62 @@ var switchToMap = function(callback) {
 };
 
 
+
+
+
+
+
+
+
+
+
+
+
+/**********************************************************
+  BATTLE VIEW
+**********************************************************/
+
+var battle = () => {
+  d3.select('.battle').html('');
+
+  var boardDimensions = {
+    height: 750,
+    width: 1550
+  };
+
+  var board = d3.select('.battle').append('svg')
+    .attr('class', 'map')
+    .attr('width', boardDimensions.width)
+    .attr('height', boardDimensions.height)
+    .style('background-image', 'url("../img/battle-bg.jpg")');
+
+  var nessBattle = {
+    place: () => {
+      board.selectAll('.nessBattle').data([{x: 0, y: 0}])
+        .enter() 
+        .append('image')
+        .attr('class', 'nessBattle')
+        .attr('x', 700)
+        .attr('y', 550)
+        .attr('height', 200)
+        .attr('width', 200)
+        .attr('xlink:href', '../img/ness-battle.png');
+    }
+  };
+
+  var initialize = () => {
+    nessBattle.place();
+  };
+
+  initialize();
+};
+
+var switchToBattle = function() {
+  window.location = '#/battle';
+  setTimeout(function() {
+    battle();
+  }, 100)
+};
 
 
 
