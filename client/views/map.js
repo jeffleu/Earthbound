@@ -14,7 +14,8 @@ var map = () => {
 
   var ness = {
     place: () => {
-      board.selectAll('.ness').data([{x: 0, y: 0}])
+      board.selectAll('.ness')
+        .data([{x: 0, y: 0}])
         .enter() 
         .append('image')
         .attr('class', 'ness')
@@ -93,40 +94,67 @@ var map = () => {
     }
   };
 
-  // Get and place enemies
-  var placeEnemy = function(imgUrl) {
-    board.selectAll('.enemy').data([{x: 0, y: 0}])
-      .enter()
-      .append('image')
-      .attr('class', 'enemy')
-      .attr('x', Math.floor(Math.random() * Number(boardDimensions.width)))
-      .attr('y', Math.floor(Math.random() * Number(boardDimensions.height)))
-      .attr('xlink:href', imgUrl);
+
+
+  var enemiesArray = [];
+
+  var setEnemiesArray = function(enemies) {
+    enemies.forEach(function(enemy) {
+      enemiesArray.push(enemy);
+    });
+
+    console.log('enemiesArray populated!', enemiesArray);
+    getRandomEnemy();
   };
 
-  var getEnemy = function(callback) {
+  var getEnemies = function(callback) {
     $.ajax({
       url: 'http://localhost:8080/enemies',
       type: 'GET',
-      success: function(enemy) {
-        console.log('Successfully retrieved data!', enemy);
-        var randomIndex = Math.floor(Math.random() * enemy.length);
-        var randomEnemy = enemy[randomIndex];
-
-        callback(randomEnemy.img);
+      success: function(data) {
+        console.log('Successfully retrieved data!', data);
+        callback(data);
       },
-      error: function(enemy) {
+      error: function(data) {
         console.log('Failed getting data.');
       }
     });
   };
 
 
+  // var randomEnemy;
+
+  var getRandomEnemy = function() {
+    var randomIndex = Math.floor(Math.random() * enemiesArray.length);
+    // randomEnemy = enemiesArray[randomIndex];
+    placeEnemy(enemiesArray);  
+    // console.log(`${randomEnemy.name} appeared!`);
+  };
+
+  var placeEnemy = function(enemiesArray) {
+    board.selectAll('.enemy')
+      .data(enemiesArray, function(d) { return d; })
+      .enter()
+      .append('image')
+      .attr('class', 'enemy')
+      .attr('x', Math.floor(Math.random() * Number(boardDimensions.width)))
+      .attr('y', Math.floor(Math.random() * Number(boardDimensions.height)))
+      .attr('height', function(d) { return d.imgHeight; })
+      .attr('width', function(d) { return d.imgWidth; })
+      .attr('xlink:href', function(d) { return d.img; });
+  };
+
+  
+  
+  
+
+  
+
   var initialize = () => {
     ness.place();
     runawayFive.place();
     runawayFive.move();
-    getEnemy(placeEnemy);
+    getEnemies(setEnemiesArray);
   };
 
   initialize();
@@ -141,7 +169,6 @@ var switchToMap = function(callback) {
     map();
   }, 100);
 };
-
 
 
 

@@ -9,7 +9,9 @@ var enemiesSchema = new Schema({
   def: Number,
   exp: Number,
   money: Number,
-  img: String
+  img: String,
+  imgHeight: Number,
+  imgWidth: Number
 });
 
 var heroesSchema = new Schema({

@@ -83,18 +83,20 @@ var save = function(char) {
   Insert into enemies table
 ****************************************************/
 
-// var zombieDog = new tables.Enemies({
+// var cop = new tables.Enemies({
 //   id: 1,
-//   name: 'Zombie Dog',
-//   hp: 210,
-//   atk: 39,
-//   def: 51,
-//   exp: 1354,
-//   money: 54,
-//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/zombiedog.png'
+//   name: 'Cop',
+//   hp: 75,
+//   atk: 15,
+//   def: 18,
+//   exp: 86,
+//   money: 18,
+//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/cop.png',
+//   imgHeight: 64,
+//   imgWidth: 30
 // });
 
-// save(zombieDog);
+// save(cop);
 
 // var urbanZombie = new tables.Enemies({
 //   id: 2,
@@ -104,23 +106,27 @@ var save = function(char) {
 //   def: 24,
 //   exp: 700,
 //   money: 58,
-//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/urbanzombie.png'
+//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/urbanzombie.png',
+//   imgHeight: 61,
+//   imgWidth: 42
 // });
 
 // save(urbanZombie);
 
-// var coilSnake = new tables.Enemies({
+// var rat = new tables.Enemies({
 //   id: 3,
-//   name: 'Thirsty Coil Snake',
-//   hp: 270,
-//   atk: 52,
-//   def: 80,
-//   exp: 2786,
-//   money: 276,
-//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/thirstycoilsnake.png'
+//   name: 'Rat',
+//   hp: 1827,
+//   atk: 71,
+//   def: 180,
+//   exp: 115272,
+//   money: 4464,
+//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/plagueratofdoom.png',
+//   imgHeight: 60,
+//   imgWidth: 64
 // });
 
-// save(coilSnake);
+// save(rat);
 
 // var starman = new tables.Enemies({
 //   id: 4,
@@ -130,7 +136,9 @@ var save = function(char) {
 //   def: 126,
 //   exp: 23396,
 //   money: 720,
-//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/starman.png'
+//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/starman.png',
+//   imgHeight: 59,
+//   imgWidth: 38
 // });
 
 // save(starman);
@@ -143,9 +151,26 @@ var save = function(char) {
 //   def: 129,
 //   exp: 17301,
 //   money: 1467,
-//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/guardiandigger.png'
+//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/guardiandigger.png',
+//   imgHeight: 57,
+//   imgWidth: 32
 // });
 
 // save(guardianDigger);
+
+// var pokey = new tables.Enemies({
+//   id: 6,
+//   name: 'Heavily Armed Pokey',
+//   hp: 1746,
+//   atk: 150,
+//   def: 18,
+//   exp: 10000,
+//   money: 0,
+//   img: 'http://walkthrough.starmen.net/earthbound/image/enemies/heavilyarmedpokey.png',
+//   imgHeight: 63,
+//   imgWidth: 116
+// });
+
+// save(pokey);
 
 module.exports = app;
