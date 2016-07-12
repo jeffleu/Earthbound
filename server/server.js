@@ -12,11 +12,12 @@ var db = require('./config/db-config');
 var port = process.env.PORT || 8080;
 
 // Connect to mongoDB
-// mongoose.connect(db.url);
+mongoose.connect(db.url);  
 
 // Get all data of the body (POST) parameters parse application/json 
 app.use(bodyParser.json()); 
 
+app.use(express.static(__dirname + "/../client/lib"));
 app.use(express.static(__dirname + "/../client"));
 
 // Configure our routes

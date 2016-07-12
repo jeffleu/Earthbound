@@ -1,5 +1,5 @@
 var map = () => {
-  // d3.select('.map').html('');
+  d3.select('.map').html('');
 
   var boardDimensions = {
     height: 750,
@@ -83,7 +83,7 @@ var map = () => {
         .attr('y', 225)
         .attr('height', 80)
         .attr('width', 80)
-        .attr('xlink:href', '../../img/runaway5.png');
+        .attr('xlink:href', '../img/runaway5.png');
     },
     move: () => {
       board.selectAll('.runawayFive')
@@ -101,3 +101,26 @@ var map = () => {
 
   initialize();
 };
+
+var switchToMap = function(callback) {
+  window.location = '#/map';
+  setTimeout(function() {
+    map();
+  }, 1);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

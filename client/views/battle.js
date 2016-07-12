@@ -1,5 +1,5 @@
 var battle = () => {
-  // d3.select('.main').html('');
+  d3.select('.battle').html('');
 
   var boardDimensions = {
     height: 750,
@@ -18,17 +18,24 @@ var battle = () => {
         .enter() 
         .append('image')
         .attr('class', 'nessBattle')
-        .attr('x', 300)
-        .attr('y', 225)
+        .attr('x', 700)
+        .attr('y', 550)
         .attr('height', 200)
         .attr('width', 200)
-        .attr('xlink:href', 'url("../img/ness-battle.png")');
+        .attr('xlink:href', '../img/ness-battle.png');
     }
   };
 
-  // var initialize = () => {
+  var initialize = () => {
+    nessBattle.place();
+  };
 
-  // };
+  initialize();
+};
 
-  // initialize();
+var switchToBattle = function() {
+  window.location = '#/battle';
+  setTimeout(function() {
+    battle();
+  }, 1)
 };
