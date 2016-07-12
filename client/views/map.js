@@ -1,4 +1,6 @@
-(() => {
+var map = () => {
+  // d3.select('.map').html('');
+
   var boardDimensions = {
     height: 750,
     width: 1550
@@ -8,7 +10,7 @@
     .attr('class', 'map')
     .attr('width', boardDimensions.width)
     .attr('height', boardDimensions.height)
-    .style('background-image', 'url("client/img/onett.jpg")');
+    .style('background-image', 'url("../../img/onett.jpg")');
 
   var ness = {
     place: () => {
@@ -20,14 +22,14 @@
         .attr('y', 225)
         .attr('height', 30)
         .attr('width', 30)
-        .attr('xlink:href', 'client/img/ness-walking-down.gif')
+        .attr('xlink:href', '../../img/ness-walking-down.gif')
         .on('mouseover', () => {
           board.selectAll('.ness')
-            .attr('xlink:href', 'client/img/ness-peace.png');
+            .attr('xlink:href', '../../img/ness-peace.png');
         })
         .on('mouseout', () => {
           board.selectAll('.ness')
-            .attr('xlink:href', 'client/img/ness-walking-down.gif');
+            .attr('xlink:href', '../../img/ness-walking-down.gif');
         })
         .on('click', () => {
           console.log(d3.select(this).attr('x') - 10);
@@ -47,12 +49,12 @@
       right: () => {
         board.selectAll('.ness')
           .attr('x', +board.selectAll('.ness').attr('x') + 3)
-          .attr('xlink:href', 'client/img/ness-walking-right.gif');
+          .attr('xlink:href', '../../img/ness-walking-right.gif');
       },
       down: () => {
         board.selectAll('.ness')
           .attr('y', +board.selectAll('.ness').attr('y') + 3)
-          .attr('xlink:href', 'client/img/ness-walking-down.gif');
+          .attr('xlink:href', '../../img/ness-walking-down.gif');
       }
     }
   };
@@ -81,7 +83,7 @@
         .attr('y', 225)
         .attr('height', 80)
         .attr('width', 80)
-        .attr('xlink:href', 'client/img/runaway5.png');
+        .attr('xlink:href', '../../img/runaway5.png');
     },
     move: () => {
       board.selectAll('.runawayFive')
@@ -98,4 +100,4 @@
   };
 
   initialize();
-})();
+};
