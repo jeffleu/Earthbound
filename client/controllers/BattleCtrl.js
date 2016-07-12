@@ -1,5 +1,5 @@
 angular.module('Battle', [])
 
-.controller('BattleCtrl', '$scope', [function($scope) {
-  $scope.text = 'battle controller!';
+.controller('BattleCtrl', function($scope) {
+  $scope.message = 'message inside battle controller!';
 }]);

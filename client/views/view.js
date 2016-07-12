@@ -374,7 +374,42 @@ var battle = () => {
         .attr('y', -101)
         .attr('height', 350)
         .attr('width', 500)
-        .attr('xlink:href', '../img/battle-menu.png');
+        .attr('xlink:href', '../img/battle-menu.png')
+        .on('click', function() {
+          smash.place();
+          setInterval(smash.remove, 1000);
+        });
+    }
+  };
+
+  var smash = {
+    place: () => {
+      board.selectAll('.smash').data([{x: 0, y: 0}])
+        .enter() 
+        .append('image')
+        .attr('class', 'smash')
+        .attr('x', 550)
+        .attr('y', 150)
+        .attr('height', 350)
+        .attr('width', 500)
+        .attr('xlink:href', '../img/smash.gif');
+    },
+    remove: () => {
+      board.selectAll('.smash').remove();
+    }
+  };
+
+  var hitPoints = {
+    place: () => {
+      // board.selectAll('.hp').data([{x: 0, y: 0}])
+      //   .enter() 
+      //   .append('image')
+      //   .attr('class', 'hp')
+      //   .attr('x', 400)
+      //   .attr('y', 400)
+      //   .attr('height', 350)
+      //   .attr('width', 500)
+      //   .attr('xlink:href', '../img/battle-menu.png');
     }
   };
 
