@@ -2,6 +2,7 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
+var cors = require('cors');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var tables = require('./db/schema');
@@ -24,6 +25,23 @@ var port = process.env.PORT || 8080;
 // Start app at http://localhost:8080
 app.listen(port, function () {
   console.log(`The party is getting started on port ${port}!`);
+});
+
+// Allow requests from all origins
+app.use(function(request, response, next) {
+ response.header("Access-Control-Allow-Origin", "*");
+ response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+ next();
+});
+
+app.get('/enemies', function(request, response, next) {
+  tables.Enemies.find(function(err, enemy) {
+    if (err) {
+      console.log('Error retrieving data.', enemy);
+    }
+    console.log('No errors getting data.', enemy);
+    response.send(enemy);
+  });
 });
 
 // Save to DB helper function
@@ -55,9 +73,11 @@ var save = function(char) {
 // save(ness);
 
 // // Select from DB example
-var ness = tables.Heroes.findOne({'name': 'Ness'});
+// var ness = tables.Heroes.findOne({'name': 'Ness'}).then(function(data) {
+//   console.log(data);
+// });
 
-console.log(ness);
+// console.log(ness);
 
 /****************************************************
   Insert into enemies table
@@ -127,7 +147,5 @@ console.log(ness);
 // });
 
 // save(guardianDigger);
-
-
 
 module.exports = app;
