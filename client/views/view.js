@@ -83,7 +83,7 @@ var map = () => {
     });
 
   /**********************************************************
-    RUNAWAY FIVE
+    VEHICLES
   **********************************************************/
 
   var runawayFive = {
@@ -104,6 +104,115 @@ var map = () => {
         .attr('x', 1900)
         .attr('y', 225);
     }
+  };
+
+  var recycleTruck = {
+    place1: () => {
+      board.selectAll('.recycle').data([{x: 0, y: 0}])
+        .enter() 
+        .append('image')
+        .attr('class', 'recycle')
+        .attr('x', 1900)
+        .attr('y', 210)
+        .attr('height', 80)
+        .attr('width', 80)
+        .attr('xlink:href', '../img/recycle-truck-left.png');
+    },
+    moveLeft1: () => {
+      board.selectAll('.recycle')
+        .transition().duration(8000)
+        .attr('x', 1150)
+        .attr('y', 210);
+    },
+    remove: () => {
+      board.selectAll('.recycle').remove();
+    },
+    place2: () => {
+      board.selectAll('.recycle').data([{x: 0, y: 0}])
+        .enter() 
+        .append('image')
+        .attr('class', 'recycle')
+        .attr('x', 1140)
+        .attr('y', 230)
+        .attr('height', 65)
+        .attr('width', 65)
+        .attr('xlink:href', '../img/recycle-truck-downleft.png');
+    },
+    moveDown1: () => {
+      board.selectAll('.recycle')
+        .transition().duration(4000)
+        .attr('x', 805)
+        .attr('y', 565);
+    },
+    place3: () => {
+      board.selectAll('.recycle').data([{x: 0, y: 0}])
+        .enter() 
+        .append('image')
+        .attr('class', 'recycle')
+        .attr('x', 805)
+        .attr('y', 550)
+        .attr('height', 80)
+        .attr('width', 80)
+        .attr('xlink:href', '../img/recycle-truck-left.png');
+    },
+    moveLeft2: () => {
+      board.selectAll('.recycle')
+        .transition().duration(4000)
+        .attr('x', 535)
+        .attr('y', 550);
+    },
+    place4: () => {
+      board.selectAll('.recycle').data([{x: 0, y: 0}])
+        .enter() 
+        .append('image')
+        .attr('class', 'recycle')
+        .attr('x', 535)
+        .attr('y', 550)
+        .attr('height', 65)
+        .attr('width', 65)
+        .attr('xlink:href', '../img/recycle-truck-downleft.png');
+    },
+    moveDown2: () => {
+      board.selectAll('.recycle')
+        .transition().duration(4000)
+        .attr('x', 250)
+        .attr('y', 850);
+    }
+  };
+
+  var placeVehicles = function() {
+    recycleTruck.place1();
+    runawayFive.place();
+    runawayFive.move();
+    
+    recycleTruck.moveLeft1();
+    setTimeout(function() {
+      recycleTruck.remove();
+    },8000);
+    setTimeout(function() {
+      recycleTruck.place2();
+    }, 8000);
+    setTimeout(function() {
+      recycleTruck.moveDown1();
+    }, 8200);
+    setTimeout(function() {
+      recycleTruck.remove();
+    },12000);
+    setTimeout(function() {
+      recycleTruck.place3();
+    }, 12000);
+    setTimeout(function() {
+      recycleTruck.moveLeft2();
+    }, 12000);
+    setTimeout(function() {
+      recycleTruck.remove();
+    }, 16000);
+    setTimeout(function() {
+      recycleTruck.place4();
+    }, 16000);
+    setTimeout(function() {
+      recycleTruck.moveDown2();
+    }, 16000);
   };
 
   /**********************************************************
@@ -187,7 +296,7 @@ var map = () => {
 
   var initialize = () => {
     ness.place();
-    runawayFive.place();
+    placeVehicles();
     runawayFive.move();
     getEnemies();
     collisionInterval;
@@ -248,7 +357,24 @@ var battle = () => {
         .attr('y', 120)
         .attr('height', 350)
         .attr('width', 500)
-        .attr('xlink:href', 'http://walkthrough.starmen.net/earthbound/image/enemies/heavilyarmedpokey.png');
+        .attr('xlink:href', 'http://walkthrough.starmen.net/earthbound/image/enemies/heavilyarmedpokey.png')
+        .on('click', function() {
+          battleMenu.place();
+        });
+    }
+  };
+
+  var battleMenu = {
+    place: () => {
+      board.selectAll('.battleMenu').data([{x: 0, y: 0}])
+        .enter() 
+        .append('image')
+        .attr('class', 'battleMenu')
+        .attr('x', 2)
+        .attr('y', -101)
+        .attr('height', 350)
+        .attr('width', 500)
+        .attr('xlink:href', '../img/battle-menu.png');
     }
   };
 
