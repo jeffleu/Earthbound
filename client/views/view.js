@@ -21,9 +21,24 @@ var map = () => {
   **********************************************************/
 
   var ness = {
-    place: () => {
+    character: null, 
+    get: () => {
+      $.ajax({
+        url: 'http://localhost:8080/heroes',
+        type: 'GET',
+        success: function(data) {
+          console.log('We found Ness!', data);
+          ness.character = data;
+          ness.place(ness.character);
+        },
+        error: function(data) {
+          console.log('Where in the world is Ness???');
+        }
+      });
+    },
+    place: (hero) => {
       board.selectAll('.ness')
-        .data([{x: 0, y: 0}])
+        .data(hero, function(d) { return d; })
         .enter() 
         .append('image')
         .attr('class', 'ness')
@@ -31,7 +46,7 @@ var map = () => {
         .attr('y', 225)
         .attr('height', 30)
         .attr('width', 30)
-        .attr('xlink:href', '../../img/ness-walking-down.gif')
+        .attr('xlink:href', '../../img/ness-walking-down.gif') 
         .on('mouseover', () => {
           board.selectAll('.ness')
             .attr('xlink:href', '../../img/ness-peace.png');
@@ -44,15 +59,16 @@ var map = () => {
           console.log(d3.select(this).attr('x') - 10);
         });
     },
-
     move: {
       left: () => {
         board.selectAll('.ness')
-          .attr('x', +board.selectAll('.ness').attr('x') - 4);
+          .attr('x', +board.selectAll('.ness').attr('x') - 4)
+          .attr('xlink:href', '../../img/ness-walking-left.gif');
       },
       up: () => {
         board.selectAll('.ness')
-          .attr('y', +board.selectAll('.ness').attr('y') - 4);
+          .attr('y', +board.selectAll('.ness').attr('y') - 4)
+          .attr('xlink:href', '../../img/ness-walking-up.gif');
       },
       // TO DO: trim edges on ness-walking-right.gif
       right: () => {
@@ -226,13 +242,12 @@ var map = () => {
       url: 'http://localhost:8080/enemies',
       type: 'GET',
       success: function(data) {
-        console.log('Successfully retrieved data!', data);
-        // callback(data);
+        console.log('Successfully retrieved enemy data!', data);
         enemiesArray = enemiesArray.concat(data);
         placeEnemy(enemiesArray);
       },
       error: function(data) {
-        console.log('Failed getting data.');
+        console.log('Failed getting data...');
       }
     });
   };
@@ -295,7 +310,8 @@ var map = () => {
   **********************************************************/  
 
   var initialize = () => {
-    ness.place();
+    ness.get();
+    // ness.place();
     placeVehicles();
     runawayFive.move();
     getEnemies();

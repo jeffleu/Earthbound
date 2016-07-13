@@ -38,9 +38,21 @@ app.get('/enemies', function(request, response, next) {
   tables.Enemies.find(function(err, enemy) {
     if (err) {
       console.log('Error retrieving data.', enemy);
+    } else {
+      console.log('No errors getting data.', enemy);
+      response.send(enemy);
     }
-    console.log('No errors getting data.', enemy);
-    response.send(enemy);
+  });
+});
+
+app.get('/heroes', function(request, response, next) {
+  tables.Heroes.find(function(err, hero) {
+    if (err) {
+      console.log('Error retrieving heroes...', hero);
+    } else {
+      console.log('Successfully retrieved heroes data!', hero);
+      response.send(hero);
+    }
   });
 });
 

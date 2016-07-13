@@ -4,11 +4,11 @@ angular.module('earthbound', [
 .config(function($routeProvider) {
   $routeProvider
     .when('/map', {
-      templateUrl: 'views/map.html',
-      controller: 'MapCtrl'
+      templateUrl: 'views/map.html'
+      // controller: 'MapCtrl'
     })
     .when('/battle', {
-      templateUrl: '../views/battle.html',
-      controller: 'BattleCtrl' 
+      templateUrl: '../views/battle.html'
+      // controller: 'BattleCtrl' 
     });
 })
